@@ -83,3 +83,7 @@ Serinin sonraki bölümlerinde Excel'den toplu aktarım, beyanname takibi ve KDV
 ## Uyarı
 
 Bu eklenti eğitim amaçlı bir örnektir ve Gelir İdaresi Başkanlığı ile resmî bir bağlantısı yoktur. Giriş sayfası `#userid`, `#sifre` ve `#dk` alanlarına göre doldurulur; sayfanın yapısı değişirse `content.js` dosyasının güncellenmesi gerekir. Kullanmadan önce kodu inceleyin ve ilk girişi kendi hesabınızla deneyin.
+
+## Lisans
+
+[MIT](LICENSE) © 2026 Eren Özdemir. Kodu serbestçe kullanabilir, değiştirebilir ve paylaşabilirsiniz; lisans metnini ve telif satırını korumanız yeterlidir. Yazılım garantisiz, “olduğu gibi” sunulur.

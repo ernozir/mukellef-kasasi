@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Mükellef Kasası</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="currentColor" opacity=".25"/><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="8.5" y="10.5" width="7" height="5.5" rx="1.2" fill="currentColor"/><path d="M10 10.5V9a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <div>
+        <div class="title">Mükellef Kasası</div>
+        <div class="subtitle">Dijital Vergi Dairesi girişleri</div>
+      </div>
+    </div>
+    <button id="lockBtn" class="icon-btn hidden" title="Kasayı kilitle" aria-label="Kasayı kilitle">
+      <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    </button>
+  </header>
+
+  <!-- 1) İlk kurulum: ana şifre oluştur -->
+  <section id="viewSetup" class="view hidden">
+    <div class="hero">
+      <h2>Kasanızı oluşturun</h2>
+      <p>Mükellef şifreleri bu ana şifreyle <b>AES-256</b> kullanılarak şifrelenir ve yalnızca bu bilgisayarda saklanır.</p>
+    </div>
+    <form id="setupForm" class="card form" autocomplete="off">
+      <label>Ana şifre<input id="setupPass" type="password" minlength="8" required placeholder="En az 8 karakter"></label>
+      <label>Ana şifre (tekrar)<input id="setupPass2" type="password" minlength="8" required placeholder="Aynı şifreyi yazın"></label>
+      <div class="warn">Ana şifrenizi unutursanız kasa açılamaz; kurtarma yoktur.</div>
+      <div id="setupErr" class="err"></div>
+      <button class="btn primary block" type="submit">Kasayı oluştur</button>
+    </form>
+  </section>
+
+  <!-- 2) Kilit ekranı -->
+  <section id="viewUnlock" class="view hidden">
+    <div class="hero center">
+      <div class="lock-badge">
+        <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </div>
+      <h2>Kasa kilitli</h2>
+      <p>Devam etmek için ana şifrenizi girin.</p>
+    </div>
+    <form id="unlockForm" class="card form" autocomplete="off">
+      <label>Ana şifre<input id="unlockPass" type="password" required placeholder="Ana şifreniz"></label>
+      <div id="unlockErr" class="err"></div>
+      <button class="btn primary block" type="submit" id="unlockBtn">Kilidi aç</button>
+    </form>
+  </section>
+
+  <!-- 3) Mükellef listesi -->
+  <section id="viewList" class="view hidden">
+    <div class="toolbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input id="search" type="search" placeholder="Mükellef ara…" autocomplete="off">
+      </div>
+      <button id="addBtn" class="btn primary"><span class="plus">+</span> Ekle</button>
+    </div>
+    <div id="count" class="count"></div>
+    <ul id="list" class="list"></ul>
+    <div id="empty" class="empty hidden">
+      <svg viewBox="0 0 64 64"><rect x="10" y="18" width="44" height="34" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M22 18v-4a10 10 0 0 1 20 0v4" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="32" cy="35" r="4" fill="currentColor"/></svg>
+      <h3>Kasanız boş</h3>
+      <p>İlk mükellefinizi <b>+ Ekle</b> ile ekleyin.</p>
+    </div>
+  </section>
+
+  <!-- 4) Ekle / Düzenle -->
+  <section id="viewForm" class="view hidden">
+    <form id="entryForm" class="card form" autocomplete="off">
+      <h2 id="formTitle">Yeni mükellef</h2>
+      <label>Unvan / Ad Soyad *<input id="fName" required maxlength="120" placeholder="Örn. Akdeniz Gıda Ltd. Şti."></label>
+      <label>VKN / TCKN<input id="fVkn" inputmode="numeric" maxlength="11" pattern="\d{10,11}" placeholder="10 veya 11 hane (isteğe bağlı)"></label>
+      <label>Kullanıcı kodu *<input id="fUser" required maxlength="40" placeholder="Dijital VD kullanıcı kodu"></label>
+      <label>Şifre *
+        <div class="pw">
+          <input id="fPass" type="password" required maxlength="64" placeholder="Dijital VD şifresi">
+          <button type="button" id="togglePw" class="icon-btn small" aria-label="Şifreyi göster">
+            <svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          </button>
+        </div>
+      </label>
+      <label>Not<input id="fNote" maxlength="120" placeholder="Örn. KDV iadesi takipte"></label>
+      <div id="formErr" class="err"></div>
+      <div class="row">
+        <button type="button" id="cancelBtn" class="btn ghost">Vazgeç</button>
+        <button type="submit" class="btn primary">Kaydet</button>
+      </div>
+    </form>
+  </section>
+
+  <footer class="foot">
+    <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="currentColor"/></svg>
+    AES-256 ile şifreli · yalnızca bu bilgisayarda
+  </footer>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="crypto.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

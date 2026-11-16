@@ -4,21 +4,27 @@
 
 Mükelleflerin **Dijital Vergi Dairesi** kullanıcı kodu ve şifrelerini, sizin belirlediğiniz bir **ana şifre** ile şifrelenmiş bir kasada saklayan Chrome eklentisi. **Bağlan** dediğinizde giriş sayfasını açar, kullanıcı kodu ve şifreyi yazar. **Güvenlik kodunu siz girip** girişi kendiniz yaparsınız.
 
-## 🎥 Videoyu izleyin
+## 🎥 Videoları izleyin
 
-Eklentinin Claude ile nasıl üretildiğini, nasıl kurulduğunu ve kullanıldığını 2 dakikalık videoda adım adım gösteriyoruz:
+**Bölüm 1:** Eklentinin Claude ile nasıl üretildiğini, nasıl kurulduğunu ve kullanıldığını 2 dakikalık videoda adım adım gösteriyoruz.
 
 [![Vergide Yapay Zekâ #1: Kod yazmadan şifreli mükellef kasası](docs/video-kapak.png)](https://www.youtube.com/watch?v=Vts7uFKumzI)
 
 ▶️ **https://www.youtube.com/watch?v=Vts7uFKumzI**
 
+**Bölüm 2:** v1.1'deki yenilikler: Excel'den toplu aktarım, şifreli yedekle başka bilgisayara taşıma, kopyalama ve Kilitle butonları. Claude'dan önce plan ve maket istemeyi, harici kütüphane kullanmamanın nedenlerini de anlatıyoruz.
+
+[![Vergide Yapay Zekâ #2: Excel'den kasaya toplu aktarım ve şifreli yedek](docs/video2-kapak.png)](https://youtu.be/rT27P1dPThk)
+
+▶️ **https://youtu.be/rT27P1dPThk**
+
 ## Neden yapıldı?
 
-Bu depo, **Vergide Yapay Zekâ** video serisinin ilk bölümünün çıktısıdır. Serinin amacı, vergi alanında çalışanların yapay zekâyı daha etkin kullanması: işimizi kolaylaştıracak küçük araçları, kod yazmadan, yapay zekâya tarif ederek kendimiz üretebiliriz.
+Bu depo, **Vergide Yapay Zekâ** video serisinin ilk iki bölümünün çıktısıdır. Serinin amacı, vergi alanında çalışanların yapay zekâyı daha etkin kullanması: işimizi kolaylaştıracak küçük araçları, kod yazmadan, yapay zekâya tarif ederek kendimiz üretebiliriz.
 
 Birinci bölümde mükellef kasasını seçtik. Dijital Vergi Dairesi şifreleri çoğu ofiste hâlâ bir Excel dosyasında ya da benzer bir yerde, açık metin olarak duruyor ve her girişte elle yazılıyor. Bu eklenti aynı bilgileri şifreli bir kasada tutar ve girişi tek tıka indirir.
 
-Eklentinin tüm kodu [Claude](https://claude.ai) ile, aşağıdaki istemle üretildi. Tüm süreci [videoda](https://www.youtube.com/watch?v=Vts7uFKumzI) izleyebilirsiniz.
+Eklentinin tüm kodu [Claude](https://claude.ai) ile, aşağıdaki istemle üretildi. Tüm süreci [videoda](https://www.youtube.com/watch?v=Vts7uFKumzI) izleyebilirsiniz; v1.1'deki geliştirmeler [Bölüm 2'de](https://youtu.be/rT27P1dPThk).
 
 ## Kurulum
 

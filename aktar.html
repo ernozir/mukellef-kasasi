@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Mükellef Kasası · Aktarım</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="aktar.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-in">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="currentColor" opacity=".25"/><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="8.5" y="10.5" width="7" height="5.5" rx="1.2" fill="currentColor"/><path d="M10 10.5V9a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div>
+          <div class="title">Mükellef Kasası · Aktarım</div>
+          <div class="subtitle" id="status">…</div>
+        </div>
+      </div>
+      <button id="lockBtn" class="hbtn hidden" title="Kasayı şimdi kilitle">
+        <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>Kilitle
+      </button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <div class="wrap tabs-in">
+      <a class="tab" href="#excel" data-tab="excel">
+        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8"/></svg>Excel'den içe aktar</a>
+      <a class="tab" href="#yedek-al" data-tab="yedek-al">
+        <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Şifreli yedek al</a>
+      <a class="tab" href="#geri-yukle" data-tab="geri-yukle">
+        <svg viewBox="0 0 24 24"><path d="M12 15V4m0 0-4 4m4-4 4 4M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Yedekten geri yükle</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <!-- Kasa kilitliyse -->
+    <section id="lockedCard" class="card narrow hidden">
+      <h3>Kasa kilitli</h3>
+      <p>Devam etmek için ana şifrenizi girin.</p>
+      <form id="unlockForm" autocomplete="off">
+        <label class="field">Ana şifre<input id="unlockPass" type="password" required placeholder="Ana şifreniz"></label>
+        <div id="unlockErr" class="err"></div>
+        <button class="btn primary" type="submit" id="unlockBtn">Kilidi aç</button>
+      </form>
+    </section>
+
+    <!-- Henüz kasa yoksa (Excel / yedek al sekmeleri) -->
+    <section id="noVaultCard" class="card narrow hidden">
+      <h3>Henüz bir kasa yok</h3>
+      <p>Önce araç çubuğundaki <b>Mükellef Kasası</b> simgesine tıklayıp ana şifrenizi oluşturun. Başka bir bilgisayardan geçiyorsanız <a href="#geri-yukle">yedekten geri yükleyin</a>.</p>
+    </section>
+
+    <!-- ============ EXCEL ============ -->
+    <section id="pane-excel" class="pane hidden">
+      <div class="steps">
+        <div class="card">
+          <h3><span class="stepn">1</span>Şablonu indirin ve doldurun</h3>
+          <p>Kullanıcı kodu ve VKN sütunları <b>Metin</b> biçimindedir; baştaki sıfırlar kaybolmaz. Kendi listenizi kullanacaksanız başlıkları bu şekilde yazmanız yeterli.</p>
+          <div class="cols"><span>Unvan / Ad Soyad <b>*</b></span><span>VKN / TCKN</span><span>Kullanıcı Kodu <b>*</b></span><span>Şifre <b>*</b></span><span>Not</span></div>
+          <a class="btn ghost" href="sablon/mukellef-sablonu.xlsx" download>⬇ mukellef-sablonu.xlsx</a>
+          <a class="btn ghost" href="sablon/mukellef-sablonu.csv" download>⬇ .csv</a>
+        </div>
+        <div class="card">
+          <h3><span class="stepn">2</span>Dosyayı seçin</h3>
+          <p>.xlsx veya .csv · dosya bilgisayarınızdan çıkmaz</p>
+          <label class="drop" id="xlsDrop">
+            <input id="xlsFile" type="file" accept=".xlsx,.csv,.xls,.txt" hidden>
+            <div class="fi" id="xlsIcon">XLSX</div>
+            <div class="drop-text">
+              <div class="fn" id="xlsName">Dosya seçmek için tıklayın ya da buraya sürükleyin</div>
+              <div class="fs" id="xlsInfo">Excel'de "Mükellefler" sayfası varsa o, yoksa ilk sayfa okunur</div>
+            </div>
+          </label>
+          <div id="xlsErr" class="err"></div>
+        </div>
+      </div>
+      <div id="xlsPreview"></div>
+    </section>
+
+    <!-- ============ YEDEK AL ============ -->
+    <section id="pane-yedek-al" class="pane hidden">
+      <div class="card narrow">
+        <h3>Şifreli yedek al</h3>
+        <p>Kasadaki <b id="expCount">0 mükellef</b> tek bir şifreli dosyaya (<code>.mkasa</code>) yazılır. Dosya AES-256-GCM ile şifrelenir; şifre bilinmeden açılamaz, değiştirilirse fark edilir.</p>
+        <form id="exportForm" autocomplete="off">
+          <div class="radio">
+            <label class="opt"><input type="radio" name="expMode" value="master" checked><span><b>Ana şifremle şifrele</b><small>Yeni bilgisayarda aynı ana şifreyi yazmanız yeterli. Kendi bilgisayarlarınız arasında taşımak için.</small></span></label>
+            <label class="opt"><input type="radio" name="expMode" value="separate"><span><b>Bu yedek için ayrı bir şifre belirle</b><small>Dosyayı bir çalışma arkadaşınıza verecekseniz; ana şifreniz paylaşılmaz.</small></span></label>
+          </div>
+          <label class="field">Ana şifrenizi doğrulayın<input id="expMaster" type="password" required placeholder="Ana şifreniz"></label>
+          <div id="expSeparate" class="hidden">
+            <label class="field">Yedek şifresi<input id="expPass1" type="password" minlength="8" placeholder="En az 8 karakter"></label>
+            <label class="field">Yedek şifresi (tekrar)<input id="expPass2" type="password" minlength="8" placeholder="Aynı şifreyi yazın"></label>
+            <div class="warn">Bu şifreyi unutursanız yedek açılamaz. Dosyayı ve şifreyi aynı kanaldan (ör. aynı e-postada) göndermeyin.</div>
+          </div>
+          <div id="expErr" class="err"></div>
+          <button class="btn primary" type="submit" id="expBtn">⬇ Yedeği indir</button>
+        </form>
+        <div id="expDone" class="done hidden"></div>
+      </div>
+    </section>
+
+    <!-- ============ GERİ YÜKLE ============ -->
+    <section id="pane-geri-yukle" class="pane hidden">
+      <div class="card narrow">
+        <h3>Yedekten geri yükle</h3>
+        <p id="restoreIntro">Daha önce aldığınız <code>.mkasa</code> dosyasını seçin. Kasadaki kayıtlar silinmez; yedekteki mükellefler eklenir.</p>
+        <label class="drop" id="bakDrop">
+          <input id="bakFile" type="file" accept=".mkasa,.json" hidden>
+          <div class="fi kasa"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="currentColor"/></svg></div>
+          <div class="drop-text">
+            <div class="fn" id="bakName">Yedek dosyasını seçin ya da buraya sürükleyin</div>
+            <div class="fs" id="bakInfo">.mkasa</div>
+          </div>
+        </label>
+        <form id="restoreForm" class="hidden" autocomplete="off">
+          <label class="field">Yedeğin şifresi<input id="bakPass" type="password" required placeholder="Yedeği alırken kullanılan şifre"></label>
+          <button class="btn navy" type="submit" id="bakBtn">Dosyayı çöz ve önizle</button>
+        </form>
+        <div id="bakErr" class="err"></div>
+      </div>
+      <div id="bakPreview"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="crypto.js"></script>
+  <script src="vault.js"></script>
+  <script src="spreadsheet.js"></script>
+  <script src="aktar.js"></script>
+</body>
+</html>

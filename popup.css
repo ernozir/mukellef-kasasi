@@ -13,7 +13,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 body {
-  width: 380px; min-height: 520px; background: var(--bg); color: var(--ink);
+  width: 380px; height: 580px; background: var(--bg); color: var(--ink);
   font: 14px/1.4 "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   display: flex; flex-direction: column;
 }
@@ -22,18 +22,30 @@ svg { width: 18px; height: 18px; display: block; }
 
 .top {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 16px 18px; color: #fff;
+  padding: 16px 14px 18px; gap: 8px; color: #fff;
   background: radial-gradient(120% 140% at 0% 0%, #1f5f8b 0%, var(--navy2) 35%, var(--navy) 100%);
 }
-.brand { display: flex; gap: 12px; align-items: center; }
+.brand { display: flex; gap: 10px; align-items: center; }
 .logo {
-  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; flex: none;
   background: linear-gradient(135deg, #2dd4bf, #0ea5e9); color: #fff;
   box-shadow: 0 6px 16px rgba(20, 184, 166, .45);
 }
 .logo svg { width: 24px; height: 24px; }
-.title { font-weight: 800; font-size: 17px; letter-spacing: -.2px; }
-.subtitle { font-size: 12px; opacity: .75; }
+.title { font-weight: 800; font-size: 16.5px; letter-spacing: -.2px; white-space: nowrap; }
+.subtitle { font-size: 11.5px; opacity: .75; }
+.hbtns { display: flex; gap: 5px; flex: none; }
+/* Başlıktaki küçük, yazılı butonlar: Aktar ve Kilitle */
+.hbtn {
+  border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.1); color: #fff; height: 30px;
+  padding: 0 8px; border-radius: 9px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+  font: 600 11.5px inherit; font-family: inherit; white-space: nowrap;
+}
+.hbtn svg { width: 13px; height: 13px; }
+.brand { min-width: 0; }
+.brand > div:last-child { min-width: 0; }
+.subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hbtn:hover { background: rgba(255,255,255,.22); }
 .icon-btn {
   border: 0; background: rgba(255,255,255,.12); color: #fff; width: 34px; height: 34px;
   border-radius: 10px; display: grid; place-items: center; cursor: pointer;
@@ -41,7 +53,8 @@ svg { width: 18px; height: 18px; display: block; }
 .icon-btn:hover { background: rgba(255,255,255,.22); }
 .icon-btn.small { width: 30px; height: 30px; background: transparent; color: var(--muted); }
 
-.view { padding: 14px; flex: 1; }
+.view { padding: 14px; flex: 1; min-height: 0; overflow-y: auto; }
+#viewList { display: flex; flex-direction: column; padding-bottom: 8px; }
 .hero { padding: 6px 4px 12px; }
 .hero.center { text-align: center; }
 .hero h2 { margin: 6px 0 4px; font-size: 18px; }
@@ -86,35 +99,53 @@ svg { width: 18px; height: 18px; display: block; }
 .search input { border: 0; outline: 0; flex: 1; padding: 10px 0; font: inherit; background: transparent; color: var(--ink); }
 .count { font-size: 12px; color: var(--muted); margin: 10px 2px 6px; }
 
-.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 330px; overflow-y: auto; }
+/* Liste kendi alanında kayar; arama kutusu hep görünür kalır. */
+.list {
+  list-style: none; margin: 0 -4px; padding: 0 4px 4px; display: flex; flex-direction: column; gap: 6px;
+  flex: 1; min-height: 0; overflow-y: auto;
+}
 .item {
-  display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line);
-  border-radius: 14px; padding: 10px; transition: box-shadow .15s, transform .15s;
+  display: flex; align-items: center; gap: 9px; background: #fff; border: 1px solid var(--line);
+  border-radius: 12px; padding: 7px 6px 7px 9px; flex: none; transition: box-shadow .15s, border-color .15s;
 }
 .item:hover { box-shadow: 0 6px 18px rgba(15,23,42,.08); }
+.item.sel { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(20,184,166,.15); }
 .avatar {
-  width: 38px; height: 38px; border-radius: 11px; flex: none; display: grid; place-items: center;
-  color: #fff; font-weight: 800; font-size: 13px; letter-spacing: .3px;
+  width: 30px; height: 30px; border-radius: 9px; flex: none; display: grid; place-items: center;
+  color: #fff; font-weight: 800; font-size: 11.5px; letter-spacing: .3px;
 }
 .meta { flex: 1; min-width: 0; }
-.name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sub { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name { font-weight: 700; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sub { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .connect {
-  background: var(--navy); color: #fff; border: 0; border-radius: 9px; padding: 8px 11px;
-  font: 600 12.5px inherit; font-family: inherit; cursor: pointer; display: inline-flex; gap: 5px; align-items: center;
+  background: var(--navy); color: #fff; border: 0; border-radius: 9px; padding: 7px 10px; flex: none;
+  font: 600 12px inherit; font-family: inherit; cursor: pointer; display: inline-flex; gap: 5px; align-items: center;
 }
 .connect:hover { background: var(--teal-d); }
 .connect svg { width: 14px; height: 14px; }
-.more { border: 0; background: transparent; color: var(--muted); width: 26px; height: 30px; border-radius: 8px; cursor: pointer; }
-.more:hover { background: #eef2f7; }
+.more { border: 0; background: transparent; color: var(--muted); width: 26px; height: 30px; border-radius: 8px; cursor: pointer; flex: none; font-size: 16px; }
+.more:hover, .more.on { background: #eef2f7; color: var(--ink); }
+/* Menü sayfanın en üst katmanında, sabit konumda açılır; listenin kaydırma alanı onu kesemez. */
 .menu {
-  position: absolute; right: 8px; top: 44px; background: #fff; border: 1px solid var(--line); border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(15,23,42,.15); z-index: 5; overflow: hidden; min-width: 130px;
+  position: fixed; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 3px 0;
+  box-shadow: 0 10px 30px rgba(15,23,42,.18); z-index: 50; min-width: 190px;
 }
-.menu button { display: block; width: 100%; text-align: left; border: 0; background: #fff; padding: 9px 12px; font: inherit; cursor: pointer; }
-.menu button:hover { background: #f1f5f9; }
-.menu .danger { color: var(--red); }
-.item { position: relative; }
+.menu button {
+  display: flex; gap: 9px; align-items: center; width: 100%; text-align: left; border: 0; background: #fff;
+  padding: 9px 12px; font: inherit; font-size: 13.5px; cursor: pointer; white-space: nowrap; color: var(--ink);
+}
+.menu button svg { width: 15px; height: 15px; color: var(--muted); }
+.menu button:hover, .menu button:focus-visible { background: #f1f5f9; outline: none; }
+.menu .danger, .menu .danger svg { color: var(--red); }
+.menu hr { border: 0; border-top: 1px solid var(--line); margin: 3px 0; }
+.kbd { font-size: 10.5px; border: 1px solid #cbd5e1; border-bottom-width: 2px; border-radius: 5px; padding: 0 4px; background: #fff; }
+.link {
+  display: block; margin: 12px auto 0; border: 0; background: none; color: var(--teal-d); font: 600 12.5px inherit;
+  font-family: inherit; cursor: pointer; text-align: center;
+}
+.link:hover { text-decoration: underline; }
+.btn.restore { margin-top: 10px; background: #fff; border: 1px solid #99e2d8; color: var(--teal-d); }
+.btn.restore:hover { background: #f0fdfa; }
 
 .empty { text-align: center; color: var(--muted); padding: 30px 10px; }
 .empty svg { width: 54px; height: 54px; margin: 0 auto 8px; color: #94a3b8; }

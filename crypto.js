@@ -30,14 +30,19 @@ async function deriveKey(password, salt, iterations = KDF_ITERATIONS) {
   );
 }
 
-async function encryptJSON(key, data) {
+// aad (isteğe bağlı): şifrelenmeyen ama değiştirilirse çözmeyi bozan ek bilgi (ör. yedek dosyası başlığı).
+async function encryptJSON(key, data, aad) {
   const iv = crypto.getRandomValues(new Uint8Array(12)); // her kayıtta yeni IV
-  const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(JSON.stringify(data)));
+  const params = { name: "AES-GCM", iv };
+  if (aad) params.additionalData = enc.encode(aad);
+  const ct = await crypto.subtle.encrypt(params, key, enc.encode(JSON.stringify(data)));
   return { iv: b64(iv), ct: b64(ct) };
 }
 
-async function decryptJSON(key, iv, ct) {
-  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(iv) }, key, unb64(ct));
+async function decryptJSON(key, iv, ct, aad) {
+  const params = { name: "AES-GCM", iv: unb64(iv) };
+  if (aad) params.additionalData = enc.encode(aad);
+  const pt = await crypto.subtle.decrypt(params, key, unb64(ct));
   return JSON.parse(dec.decode(pt));
 }
 

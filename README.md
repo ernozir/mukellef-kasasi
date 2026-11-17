@@ -234,7 +234,7 @@ Bu istemlerde dikkat ettiğimiz dört şey: **akışı adım adım anlatmak**, *
 
 ## Sırada ne var?
 
-Beyanname takibi v1.2.0 ile eklendi. Sırada tahakkuk ve KDV iadesi takibi var.
+Beyanname takibi v1.2.0 ile eklendi. Sırada KDV iadesi takibi var.
 
 ## Sürüm geçmişi
 
@@ -244,7 +244,7 @@ Beyanname takibi v1.2.0 ile eklendi. Sırada tahakkuk ve KDV iadesi takibi var.
 
 ## Uyarı
 
-Bu eklenti eğitim amaçlı bir örnektir ve Gelir İdaresi Başkanlığı ile resmî bir bağlantısı yoktur. Giriş sayfası `#userid`, `#sifre` ve `#dk` alanlarına göre doldurulur; sayfanın yapısı değişirse `content.js` dosyasının güncellenmesi gerekir. Kullanmadan önce kodu inceleyin ve ilk girişi kendi hesabınızla deneyin.
+Bu eklenti eğitim amaçlı bir örnektir ve Gelir İdaresi Başkanlığı ile resmî bir bağlantısı yoktur. Eklenti bir robot ya da arka planda kendi başına çalışan bir otomasyon değildir: güvenlik kodunu çözmeye çalışmaz, hiçbir korumayı aşmaz; yalnızca sizin açtığınız oturumda, sizin başlattığınız işlemleri yapar. Sitelerin kullanım koşulları otomatik erişimi kısıtlayabilir. Bu eklentiyi kullanmak ya da benzer bir aracı kendiniz geliştirmek sizin kararınız ve sorumluluğunuzdadır; ilgili sitenin kullanım koşullarını okuyup bilinçli karar verin. Site ileride değişirse eklenti çalışmayabilir; site aynı işi kendisi sunmaya başlarsa eklentiye gerek de kalmayabilir. Giriş sayfası `#userid`, `#sifre` ve `#dk` alanlarına göre doldurulur; sayfanın yapısı değişirse `content.js` dosyasının güncellenmesi gerekir. Kullanmadan önce kodu inceleyin ve ilk girişi kendi hesabınızla deneyin.
 
 ## Lisans
 

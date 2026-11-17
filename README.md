@@ -20,11 +20,11 @@ Mükelleflerin **Dijital Vergi Dairesi** kullanıcı kodu ve şifrelerini, sizin
 
 ## Neden yapıldı?
 
-Bu depo, **Vergide Yapay Zekâ** video serisinin ilk iki bölümünün çıktısıdır. Serinin amacı, vergi alanında çalışanların yapay zekâyı daha etkin kullanması: işimizi kolaylaştıracak küçük araçları, kod yazmadan, yapay zekâya tarif ederek kendimiz üretebiliriz.
+Bu depo, **Vergide Yapay Zekâ** video serisinin ilk üç bölümünün çıktısıdır; eklenti her bölümde yeni bir özellikle büyüyor. Serinin amacı, vergi alanında çalışanların yapay zekâyı daha etkin kullanması: işimizi kolaylaştıracak küçük araçları, kod yazmadan, yapay zekâya tarif ederek kendimiz üretebiliriz.
 
 Birinci bölümde mükellef kasasını seçtik. Dijital Vergi Dairesi şifreleri çoğu ofiste hâlâ bir Excel dosyasında ya da benzer bir yerde, açık metin olarak duruyor ve her girişte elle yazılıyor. Bu eklenti aynı bilgileri şifreli bir kasada tutar ve girişi tek tıka indirir.
 
-Eklentinin tüm kodu [Claude](https://claude.ai) ile, aşağıdaki istemle üretildi. Tüm süreci [videoda](https://www.youtube.com/watch?v=Vts7uFKumzI) izleyebilirsiniz; v1.1'deki geliştirmeler [Bölüm 2'de](https://youtu.be/rT27P1dPThk).
+Eklentinin tüm kodu [Claude](https://claude.ai) ile, aşağıdaki istemle üretildi. Tüm süreci [videoda](https://www.youtube.com/watch?v=Vts7uFKumzI) izleyebilirsiniz; v1.1'deki geliştirmeler [Bölüm 2'de](https://youtu.be/rT27P1dPThk), v1.2'deki beyanname takibi ve bu özelliği adım adım nasıl geliştirdiğimiz Bölüm 3'te.
 
 ## Kurulum
 
@@ -36,6 +36,18 @@ Eklenti Chrome Web Mağazası'nda değildir; “paketlenmemiş eklenti” olarak
 4. Sağ üstten **Geliştirici modu**nu açın.
 5. **Paketlenmemiş öğe yükle**'ye basın ve içinde `manifest.json` bulunan klasörü seçin. GitHub'dan indirilen ZIP'te bu klasörün adı `mukellef-kasasi-main` olur.
 6. Sağ üstteki **yapboz simgesine** tıklayın, **Mükellef Kasası**'nın yanındaki **raptiyeye** basarak eklentiyi araç çubuğuna sabitleyin.
+
+## Eklentiyi güncelleme
+
+Eklentiyi daha önce kurduysanız yeni sürüme geçerken kasadaki kayıtlarınız korunur. Tek koşul: yeni dosyaları **eklentiyi ilk kurduğunuz klasöre** koymak.
+
+1. **Önce yedek alın:** **Aktar** → **Şifreli yedek al**. Bir şey ters giderse kayıtlarınızı bu dosyadan geri yüklersiniz.
+2. Bu sayfada **Code → Download ZIP** ile yeni sürümü indirin ve ZIP'i açın.
+3. Açılan `mukellef-kasasi-main` klasörünün **içindeki dosyaları** seçin ve eklentiyi ilk kurduğunuz klasöre kopyalayın (ör. `Belgeler/MukellefKasasi`). Aynı adlı dosyalar için **Değiştir**'i seçin.
+4. Chrome'da `chrome://extensions` sayfasını açın ve **Mükellef Kasası** kartındaki **↻ (yeniden yükle)** düğmesine basın.
+5. Kartta sürüm **1.2.0** görünüyorsa güncelleme tamam. **Ayrıntılar** → **Site erişimi**'nde eklentinin yalnızca iki GİB adresine erişebildiğini görebilirsiniz.
+
+> ⚠️ **Başka bir klasöre çıkarmayın.** Yeni dosyaları farklı bir klasöre çıkarıp **Paketlenmemiş öğe yükle** ile oradan yüklerseniz Chrome bunu yeni bir eklenti sayar ve kasanız boş görünür. Kayıtlarınız eski eklentide durur; **eski eklentiyi kaldırmayın**, kaldırırsanız kasası da silinir. Böyle olduysa yeni kopyayı kaldırıp yukarıdaki adımları izleyin ya da 1. adımda aldığınız yedeği yeni kopyada **Aktar** → **Yedekten geri yükle** ile açın.
 
 ## Kullanım
 
@@ -79,13 +91,32 @@ Excel dosyası hiçbir yere gönderilmez ve harici kütüphane kullanılmadan ok
 - Bilgisayarda kasa yoksa kasa oluşturulur ve **yedeğin şifresi yeni kasanın ana şifresi olur.**
 - Kasa varsa kayıtlar **birleştirilir**: hiçbir kayıt silinmez, aynı kullanıcı kodlu kayıtlar yalnızca "güncelle" seçilirse değişir.
 
+## Beyanname takibi (İnternet Vergi Dairesi)
+
+![Beyanname sayfası: 2025 KDV1, 20 beyanname, 12 güncel sürüm seçili (uydurma veri)](docs/beyanname.png)
+
+1. Dijital Vergi Dairesi'ne giriş yapın ve ana sayfadaki **İnternet Vergi Dairesi** kartına tıklayıp yönlendirmeyi onaylayın. IVD yeni sekmede açılır.
+2. IVD sekmesindeyken eklenti simgesine basın. Popup sayfayı tanır ve **IVD işlemleri**ni gösterir; kasa kilidini açmanız gerekmez.
+3. **Beyannameler**'e basın. Beyanname sayfası yeni sekmede açılır.
+4. Başlangıç ve bitiş dönemini seçip **Listele**'ye basın (*Bu yıl*, *Geçen yıl*, *Son 3 ay* kısayolları var). IVD tek sorguda en fazla bir yıl kabul ettiği için daha uzun aralıklar yıllara bölünerek sorgulanır.
+   IVD sekmesi kapanır ya da oturum düşerse sayfa açık kalır: IVD'yi yeniden açtığınızda sayfa açık IVD sekmesini kendisi bulur ve liste kaldığı yerden devam eder. Sayfayı yenilediğinizde de bağlantı kendiliğinden kurulur.
+5. **Beyanname türü** kutusundan türü seçin. KDV1, KDV2, KGECICI, KURUMLAR, GELIR ve GGECICI her zaman üstte durur; o dönemde kaydı olmayanlar soluk görünür. Altında sorguda gelen diğer türler listelenir. Son seçtiğiniz tür hatırlanır.
+6. Her satırda **Görüntüle** (PDF yeni sekmede açılır) ve **İndir** düğmeleri var.
+7. **Seçilenleri indir (ZIP)** seçili türün işaretli satırlarını tek ZIP olarak indirir. ZIP'te PDF'lerin yanında Excel'de açılan bir `ozet.csv` de bulunur. Dosya adları: `<VKN>_<TÜR>_<dönem>.pdf`, ZIP adı: `<VKN>_<TÜR>_<başlangıç>_<bitiş>.zip`.
+
+**Düzeltme beyannameleri:** Aynı dönem için birden fazla beyanname verildiyse eklenti her sürümün PDF'indeki **Onay Zamanı**'nı okur ve en yenisini **Güncel** olarak işaretler. Liste açıldığında her dönemin yalnızca güncel sürümü seçili gelir; örneğin bir yılda 8 düzeltmeyle 20 KDV beyannamesi varsa ZIP'e 12 güncel beyanname girer. Önceki sürümleri tek tek ya da **Önceki sürümleri de seç** ile ekleyebilirsiniz (`…_onceki-1.pdf`). Bir PDF'te onay zamanı okunamazsa satır **Tahmini** olarak işaretlenir ve o dönemin tüm sürümleri ZIP'e eklenir; eklenti sessizce tahmin yapmaz.
+
 ## Güvenlik
 
 - **Şifreleme:** Ana şifreden PBKDF2-SHA256 (600.000 tur) ile türetilen anahtar ve AES-256-GCM. Yalnızca tarayıcının yerleşik Web Crypto API'si kullanılır, harici kütüphane yoktur.
 - **Ana şifre hiçbir yerde saklanmaz.** Diskte yalnızca şifreli kasa durur (`chrome.storage.local`).
 - Kilit açıkken anahtar yalnızca bellekte tutulur (`chrome.storage.session`). 10 dakika işlem yapılmazsa ya da tarayıcı kapanınca kasa kilitlenir.
 - 5 hatalı ana şifre denemesinden sonra artan bir bekleme süresi uygulanır.
-- **Eklenti internete veri göndermez.** Tek site izni `https://dijital.gib.gov.tr/*` adresidir. Excel aktarımı ve yedekleme için yeni izin istenmez.
+- **Eklenti internete veri göndermez.** Yalnızca iki GİB adresine erişebilir: `https://dijital.gib.gov.tr/*` (giriş sayfası) ve v1.2'den itibaren `https://intvrg.gib.gov.tr/*` (İnternet Vergi Dairesi). Excel aktarımı ve yedekleme için izin istenmez.
+- **Beyanname takibi (v1.2) için** `intvrg.gib.gov.tr` site izni ve `scripting` izni eklendi. IVD sayfasına kendiliğinden çalışan bir betik konmaz: `ivd.js` yalnızca siz popup'ı ya da beyanname sayfasını açtığınızda IVD sekmesine yüklenir.
+- IVD oturum anahtarı (adres çubuğundaki `token`) **IVD sekmesinden çıkmaz**: hiçbir yere yazılmaz, beyanname sayfası onu görmez. İstekler IVD sekmesindeki `ivd.js` üzerinden, sitenin kendi adresinden gider.
+- `ivd.js` yalnızca okuma yapar: oturumun kime ait olduğu (IVD'nin kendi açılışta yaptığı oturum bilgisi sorgusu; yanıttan yalnızca VKN/TCKN ve unvan alınır), beyanname listesi ve beyanname PDF'i. Beyanname gönderme, iptal gibi hiçbir işleme dokunmaz. Yönlendirme onayına ve IVD kartına eklenti değil, siz basarsınız.
+- PDF'ler sırayla ve kısa aralıklarla istenir. Okunan PDF'ler yalnızca sayfa açıkken bellekte tutulur.
 - **Harici kütüphane yoktur.** Şifreleme, Excel okuma ve dosya indirme tarayıcının yerleşik araçlarıyla yapılır; denetlenecek kodun tamamı bu depodadır.
 - Yedek almak için kilit açık olsa bile ana şifre yeniden sorulur. Yedek dosyası kendi rastgele tuzu ile PBKDF2-SHA256 (600.000 tur) + AES-256-GCM kullanır; dosya başlığı (tarih, kayıt sayısı, ayarlar) da doğrulanır.
 - Giriş bilgisi yalnızca **Bağlan** ile açılan sekmeye, tek seferlik ve en fazla 60 saniyeliğine verilir.
@@ -132,6 +163,54 @@ v1.1'deki üç iyileştirme için Claude'a şu istemler verildi. Her birinde ön
    silinmesin.
 ```
 
+### Bölüm 3'te kullanılan istemler (v1.2)
+
+Bu bölümde istemlerden önce **araştırma** yaptık: işi elle bir kez yapıp tarayıcının Geliştirici Araçları'ndaki **Network** sekmesinden sitenin hangi istekleri gönderdiğini kaydettik ve bu kaydı Claude'a verdik. Aşağıdaki istemler sadeleştirilmiştir; eklediğimiz istek, yanıt ve PDF örnekleri burada yer almaz. **Kendi kaydınızı bir yapay zekâ aracına verirken adresteki oturum anahtarını çıkarın: oturum açıkken şifreniz gibidir.**
+
+```text
+1) Keşif ve amaç
+Mükellef Kasası'na beyanname takibi ekleyelim. Akış şöyle: Dijital Vergi Dairesi'ne
+girdikten sonra ana sayfadaki İnternet Vergi Dairesi kartına tıklanıyor (kartın HTML
+öğesini ekledim). Onay penceresinden sonra İnternet Vergi Dairesi yeni sekmede açılıyor;
+adresteki oturum anahtarıyla bir süre sorgu atılabiliyor. Beyanname sorgulama isteğini
+ve yanıtını ayrı bir dosyada verdim. Amacımız: seçtiğim yıl ve ay aralığında beyanname
+listesini türe göre çekmek, her birine Görüntüle ve İndir düğmesi koymak.
+Kod yazmadan önce bir plan çıkar.
+
+2) Yapı önerisi ve asıl dert
+İnternet Vergi Dairesi sayfası açıkken eklentiye basınca eklenti sayfayı tanısın ve
+yapılacak işler listesi çıksın. Beyanname'ye tıklayınca sorgulama, listeleme ve indirme
+görünsün. "Tümünü indir (ZIP)" de olsun. Ama kullanıcıların zorlandığı bir durum var:
+düzeltme beyannameleri. Aynı ay için üç beyanname olabilir: biri asıl, ikisi düzeltme.
+Biz onay zamanı en yeni olanı almalıyız. Bunu çözmemiz gerekiyor.
+
+3) Veriyle doğrulama
+Düzeltme olan bir yanıt örneği ve düzeltme beyannamesinin PDF linki ekte. PDF'te
+"Onay Zamanı" ve "Düzeltme Nedeni" yazıyor. Aynı dönemin asıl ve düzeltme PDF'lerini de
+ekledim. Bazı türler yeni PDF biçimine geçti; o örneği de gönderiyorum, orada da
+"Onay Zamanı" yazıyor.
+
+4) Ekran kararı
+Bunu açılır pencerede mi yapalım, yoksa Aktarım'daki gibi ayrı bir sayfada mı gösterelim?
+
+5) Maket geri bildirimi
+Popup için A uygun; "Yakında" satırı görünmesin. Tablo uygun, ama türler alt alta değil,
+bir seçim kutusundan seçilsin. Sık kullanılanlar üstte olsun: KDV1, KDV2, KGECICI,
+KURUMLAR, GELIR, GGECICI. "Tümünü indir" bütün beyannameleri değil, seçtiğimiz türü
+indirsin; satırlarda seçim kutusu da olsun. En sık iş, KDV beyannamelerinin güncel
+sürümlerini indirmek: örneğin 2025'te 20 beyanname var, 8'i düzeltme; kullanıcı güncel
+12'sini istiyor. Darboğaz bu.
+
+6) Gerçek deneme geri bildirimleri
+- Denedim, VKN bulunamıyor, elle girmek zorunda kalıyoruz. Oturum bilgisini döndüren
+  isteği ekte gönderiyorum.
+- Beyanname sayfasını yenileyince bağlantı kurulamıyor. Açık olan İnternet Vergi Dairesi
+  sekmesini arayarak bağlanamaz mı? Aynı tarayıcıda tek oturum açılabiliyor.
+- İzin şart mı, yoksa eklentiyi yeniden kurmamak için mi böyle yazdık?
+```
+
+Bu istemlerde dikkat ettiğimiz dört şey: **akışı adım adım anlatmak**, **kendi kaydettiğimiz gerçek veriyi vermek** (Claude tahmin etmek zorunda kalmasın), **amacı ve asıl derdi somut yazmak** (20 beyanname, 8 düzeltme, güncel 12) ve **kod yazmadan önce plan ve maket istemek**. Claude'un bulduğu bir ipucu (beyanname kimliğindeki zaman damgası) PDF'lerle karşılaştırınca onay anı değil oluşturma anı çıktı; bu yüzden onay zamanı tahmin edilmiyor, PDF'ten okunuyor.
+
 ## Dosyalar
 
 | Dosya | Görevi |
@@ -142,6 +221,12 @@ v1.1'deki üç iyileştirme için Claude'a şu istemler verildi. Her birinde ön
 | `vault.js` | Kasa ve oturum işlemleri, kayıt kuralları (VKN/TCKN denetimi), birleştirme |
 | `spreadsheet.js` | Kütüphanesiz `.xlsx` ve `.csv` okuyucu |
 | `crypto.js` | Şifreleme yardımcıları (PBKDF2 + AES-GCM) |
+| `beyanname.html`, `beyanname.css`, `beyanname.js` | Beyanname sayfası: dönem, tür seçimi, liste, görüntüleme, seçilenleri indirme |
+| `popup-ivd.js` | Popup'ta IVD sekmesini tanır, `ivd.js`'i yükler, IVD işlemleri ekranını gösterir |
+| `ivd.js` | IVD sekmesinde çalışır: kimlik bilgisi, beyanname sorgusu ve PDF alma (token bu sekmeden çıkmaz) |
+| `beyanname-kural.js` | Dönem ve tür adları, gruplama, güncel sürüm seçimi, dosya adları, CSV |
+| `pdfmetin.js` | Kütüphanesiz PDF metin okuyucu: beyannamedeki "Onay Zamanı"nı bulur (GİB'in eski ve yeni PDF biçimleri) |
+| `zipwrite.js` | Kütüphanesiz ZIP yazıcı (CRC-32, Türkçe dosya adları) |
 | `background.js` | Bağlan'da giriş sayfasını açar, bilgiyi yalnızca o sekmeye bir kez verir |
 | `content.js` | Giriş sayfasında kullanıcı kodu ve şifre alanlarını doldurur |
 | `sablon/` | Excel (`.xlsx`) ve CSV aktarım şablonları |
@@ -149,10 +234,11 @@ v1.1'deki üç iyileştirme için Claude'a şu istemler verildi. Her birinde ön
 
 ## Sırada ne var?
 
-Excel'den toplu aktarım ve şifreli yedek v1.1.0 ile eklendi. Serinin sonraki bölümlerinde beyanname takibi ve KDV iadesi takibi var.
+Beyanname takibi v1.2.0 ile eklendi. Sırada tahakkuk ve KDV iadesi takibi var.
 
 ## Sürüm geçmişi
 
+- **1.2.0** — Beyanname takibi: IVD sekmesinde popup'ta IVD işlemleri, beyanname sayfası (dönem seçimi, tür seçim kutusu, görüntüleme ve indirme), düzeltme beyannamelerinde PDF'teki onay zamanına göre güncel sürüm, seçilenleri ZIP olarak indirme ve `ozet.csv`. Yeni izinler: `intvrg.gib.gov.tr` site izni, `scripting`.
 - **1.1.0** — Excel/CSV'den toplu aktarım (önizleme, doğrulama, yinelenen kayıt kontrolü), şifreli yedek alma ve başka bilgisayarda geri yükleme, daha sık liste satırları, kesilmeyen ⋮ menüsü, aramada Enter ile bağlanma, başlıkta yazılı **Aktar** ve **Kilitle** butonları, kodu ve şifreyi kopyalama, aynı kullanıcı kodunun iki kez eklenmesinin engellenmesi.
 - **1.0.0** — İlk sürüm.
 

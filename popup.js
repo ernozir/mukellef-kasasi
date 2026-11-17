@@ -12,10 +12,12 @@ let editingId = null;
 // ---------- Görünüm yönetimi ----------
 function show(view) {
   closeMenu();
-  for (const v of ["viewSetup", "viewUnlock", "viewList", "viewForm"]) $(v).classList.toggle("hidden", v !== view);
+  for (const v of ["viewIvd", "viewSetup", "viewUnlock", "viewList", "viewForm"]) $(v).classList.toggle("hidden", v !== view);
   const open = view === "viewList" || view === "viewForm";
   $("lockBtn").classList.toggle("hidden", !open);
   $("transferBtn").classList.toggle("hidden", !open);
+  $("kasaBtn").classList.toggle("hidden", view !== "viewIvd");
+  $("subtitle").textContent = view === "viewIvd" ? "İnternet Vergi Dairesi" : "Dijital Vergi Dairesi girişleri";
   if (view === "viewList") setTimeout(() => $("search").focus(), 30);
 }
 function toast(text) {
@@ -43,7 +45,12 @@ async function openTransfer(tab) {
 }
 
 // ---------- Başlangıç ----------
+// IVD sekmesinde açıldıysa önce IVD işlemleri gösterilir (popup-ivd.js); kasa kilidi gerekmez.
 async function init() {
+  if (await ivdEkrani()) return;
+  await kasaAc();
+}
+async function kasaAc() {
   if (!(await getVault())) { show("viewSetup"); $("setupPass").focus(); return; }
   const s = await resumeSession();
   if (s) { ({ key, entries } = s); renderList(); show("viewList"); return; }
@@ -81,6 +88,8 @@ $("unlockForm").addEventListener("submit", async (e) => {
 });
 
 $("lockBtn").addEventListener("click", lock);
+$("kasaBtn").addEventListener("click", kasaAc);
+$("kasayaDon").addEventListener("click", kasaAc);
 $("transferBtn").addEventListener("click", () => openTransfer("excel"));
 $("importLink").addEventListener("click", () => openTransfer("excel"));
 

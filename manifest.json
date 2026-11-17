@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "Mükellef Kasası",
   "short_name": "Mükellef Kasası",
-  "version": "1.1.0",
-  "description": "Mükelleflerin Dijital Vergi Dairesi giriş bilgilerini ana şifreyle şifrelenmiş bir kasada saklar ve giriş formunu tek tıkla doldurur.",
+  "version": "1.2.0",
+  "description": "Dijital Vergi Dairesi giriş bilgilerini şifreli bir kasada saklar, girişi tek tıkla doldurur; İnternet Vergi Dairesi'nde beyannameleri listeleyip toplu indirir.",
   "action": {
     "default_popup": "popup.html",
     "default_title": "Mükellef Kasası",
@@ -23,8 +23,8 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage"],
-  "host_permissions": ["https://dijital.gib.gov.tr/*"],
+  "permissions": ["storage", "scripting"],
+  "host_permissions": ["https://dijital.gib.gov.tr/*", "https://intvrg.gib.gov.tr/*"],
   "content_scripts": [
     {
       "matches": ["https://dijital.gib.gov.tr/portal/login*"],

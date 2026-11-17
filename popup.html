@@ -13,10 +13,13 @@
       </div>
       <div>
         <div class="title">Mükellef Kasası</div>
-        <div class="subtitle">Dijital Vergi Dairesi girişleri</div>
+        <div class="subtitle" id="subtitle">Dijital Vergi Dairesi girişleri</div>
       </div>
     </div>
     <div class="hbtns">
+      <button id="kasaBtn" class="hbtn hidden" title="Mükellef kasasını aç">
+        <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>Kasa
+      </button>
       <button id="transferBtn" class="hbtn hidden" title="Excel'den içe aktar, şifreli yedek al, yedekten geri yükle">
         <svg viewBox="0 0 24 24"><path d="M7 4v13m0 0-3-3m3 3 3-3M17 20V7m0 0-3 3m3-3 3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Aktar
       </button>
@@ -25,6 +28,28 @@
       </button>
     </div>
   </header>
+
+  <!-- 0) İnternet Vergi Dairesi sekmesinde açıldıysa: IVD işlemleri (kasa kilidi gerekmez) -->
+  <section id="viewIvd" class="view hidden">
+    <div class="sess" id="ivdSess">
+      <div class="sess-av" id="ivdAv">IVD</div>
+      <div class="meta">
+        <div class="name" id="ivdAd">İnternet Vergi Dairesi</div>
+        <div class="sub"><span class="dot" id="ivdDot"></span><span id="ivdAlt">Oturum denetleniyor…</span></div>
+      </div>
+    </div>
+    <div id="ivdUyari" class="alert hidden"></div>
+    <div class="plabel">IVD işlemleri</div>
+    <button type="button" id="ivdBeyanname" class="op">
+      <span class="op-ic"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 3v5h5M9 13h6M9 17h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <span class="meta"><b>Beyannameler</b><small id="ivdBeyAlt">Listele, görüntüle, toplu indir (ZIP)</small></span>
+      <svg class="op-go" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="pfoot">
+      <span>Beyannameler yeni sekmede açılır.</span>
+      <button type="button" id="kasayaDon" class="link inline">‹ Kasaya dön</button>
+    </div>
+  </section>
 
   <!-- 1) İlk kurulum: ana şifre oluştur -->
   <section id="viewSetup" class="view hidden">
@@ -112,6 +137,7 @@
 
   <script src="crypto.js"></script>
   <script src="vault.js"></script>
+  <script src="popup-ivd.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

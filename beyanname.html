@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Beyannameler — Mükellef Kasası</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="beyanname.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-in">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="currentColor" opacity=".25"/><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="8.5" y="10.5" width="7" height="5.5" rx="1.2" fill="currentColor"/><path d="M10 10.5V9a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div>
+          <div class="title">Beyannameler</div>
+          <div class="subtitle">Mükellef Kasası · İnternet Vergi Dairesi</div>
+        </div>
+      </div>
+      <span class="chip" id="oturumCip"><span class="dot" id="oturumNokta"></span><span id="oturumMetin">IVD sekmesine bağlanılıyor…</span></span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="serit" class="strip hidden" role="alert">
+      <svg viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></svg>
+      <div><b id="seritBaslik"></b><span id="seritMetin"></span></div>
+      <span class="sp"></span>
+      <button type="button" id="seritBtn" class="btn ghost sm">Yeniden bağlan</button>
+    </div>
+
+    <form id="sorguForm" class="card ctl" autocomplete="off">
+      <div class="fld">Başlangıç<div class="sel"><select id="basAy" aria-label="Başlangıç ayı"></select><select id="basYil" aria-label="Başlangıç yılı"></select></div></div>
+      <div class="dash">–</div>
+      <div class="fld">Bitiş<div class="sel"><select id="bitAy" aria-label="Bitiş ayı"></select><select id="bitYil" aria-label="Bitiş yılı"></select></div></div>
+      <div class="quick">
+        <button type="button" data-hizli="buYil">Bu yıl</button>
+        <button type="button" data-hizli="gecenYil">Geçen yıl</button>
+        <button type="button" data-hizli="son3">Son 3 ay</button>
+      </div>
+      <label class="fld hidden" id="vknAlan">VKN / TCKN<input id="vkn" inputmode="numeric" maxlength="11" placeholder="10 veya 11 hane"></label>
+      <div class="sp"></div>
+      <button class="btn primary" type="submit" id="listeleBtn">
+        <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Listele
+      </button>
+    </form>
+    <div id="hata" class="err" role="status"></div>
+
+    <section id="sonuc" class="grp hidden">
+      <div class="ghead tool">
+        <label class="fld">Beyanname türü<select id="tur" class="tsel"></select></label>
+        <span id="ozet" class="cnt"></span>
+        <span class="sp"></span>
+        <button type="button" id="oncekiBtn" class="lnk hidden"></button>
+        <button type="button" id="indirBtn" class="btn primary">
+          <svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 3v2h2v2h-2v2h2v2h-2v3" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="9" y="14" width="4" height="4" rx="1" fill="currentColor"/></svg>Seçilenleri indir (ZIP)<span class="cntb" id="secSayi">0</span>
+        </button>
+      </div>
+
+      <div id="ilerleme" class="band hidden">
+        <div class="band-ust"><span class="spin"></span><b id="ilerBaslik">ZIP hazırlanıyor</b><span class="sp"></span><button type="button" id="durdurBtn" class="btn ghost sm">Durdur</button></div>
+        <div class="bar"><i id="ilerCubuk"></i></div>
+        <div class="prog"><span id="ilerSayi"></span><span id="ilerBoyut"></span></div>
+        <div class="kucuk" id="ilerAdim"></div>
+      </div>
+      <div id="bitti" class="band hidden">
+        <div class="done">
+          <div class="big"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><b id="bittiBaslik"></b><div class="kucuk" id="bittiAd"></div></div>
+          <span class="sp"></span><button type="button" id="bittiKapat" class="btn ghost sm">Kapat</button>
+        </div>
+        <ul id="bittiUyari" class="uyarilar"></ul>
+      </div>
+
+      <table>
+        <colgroup><col style="width:46px"><col style="width:190px"><col style="width:180px"><col style="width:290px"><col><col style="width:96px"></colgroup>
+        <thead><tr><th class="ck"><input type="checkbox" id="hepsi" aria-label="Tüm dönemleri seç"></th><th>Dönem</th><th>Onay zamanı</th><th>Durum</th><th>Düzeltme nedeni</th><th></th></tr></thead>
+        <tbody id="govde"></tbody>
+      </table>
+    </section>
+
+    <div id="bos" class="card empty hidden">Bu dönem aralığında beyanname bulunamadı.</div>
+
+    <div class="foot"><span>Onay zamanı yalnızca birden fazla sürümü olan dönemlerde PDF'ten okunur (—: tek sürüm).</span><span id="kaynak"></span></div>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="beyanname-kural.js"></script>
+  <script src="pdfmetin.js"></script>
+  <script src="zipwrite.js"></script>
+  <script src="beyanname.js"></script>
+</body>
+</html>

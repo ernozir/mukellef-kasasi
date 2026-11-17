@@ -18,13 +18,19 @@ Mükelleflerin **Dijital Vergi Dairesi** kullanıcı kodu ve şifrelerini, sizin
 
 ▶️ **https://youtu.be/rT27P1dPThk**
 
+**Bölüm 3:** v1.2 ile beyanname takibi: İnternet Vergi Dairesi'nde beyannameleri listeleme, düzeltmelerde PDF'teki onay zamanına göre güncel sürümü seçme ve seçilenleri tek ZIP olarak indirme. Bu bölümde sonuçtan çok yolu gösteriyoruz: siteyi Geliştirici Araçları ile incelemek, istemleri neden böyle yazdığımız, maket, test ve gerçek denemede çıkan sorunlar. Eklentiyi kayıtları kaybetmeden güncellemeyi de anlatıyoruz.
+
+[![Vergide Yapay Zekâ #3: KDV düzeltme beyannamelerinde güncel olanı tek tıkla indir](docs/video3-kapak.png)](https://www.youtube.com/watch?v=SKAnJJIFzL8)
+
+▶️ **https://www.youtube.com/watch?v=SKAnJJIFzL8**
+
 ## Neden yapıldı?
 
 Bu depo, **Vergide Yapay Zekâ** video serisinin ilk üç bölümünün çıktısıdır; eklenti her bölümde yeni bir özellikle büyüyor. Serinin amacı, vergi alanında çalışanların yapay zekâyı daha etkin kullanması: işimizi kolaylaştıracak küçük araçları, kod yazmadan, yapay zekâya tarif ederek kendimiz üretebiliriz.
 
 Birinci bölümde mükellef kasasını seçtik. Dijital Vergi Dairesi şifreleri çoğu ofiste hâlâ bir Excel dosyasında ya da benzer bir yerde, açık metin olarak duruyor ve her girişte elle yazılıyor. Bu eklenti aynı bilgileri şifreli bir kasada tutar ve girişi tek tıka indirir.
 
-Eklentinin tüm kodu [Claude](https://claude.ai) ile, aşağıdaki istemle üretildi. Tüm süreci [videoda](https://www.youtube.com/watch?v=Vts7uFKumzI) izleyebilirsiniz; v1.1'deki geliştirmeler [Bölüm 2'de](https://youtu.be/rT27P1dPThk), v1.2'deki beyanname takibi ve bu özelliği adım adım nasıl geliştirdiğimiz Bölüm 3'te.
+Eklentinin tüm kodu [Claude](https://claude.ai) ile, aşağıdaki istemle üretildi. Tüm süreci [videoda](https://www.youtube.com/watch?v=Vts7uFKumzI) izleyebilirsiniz; v1.1'deki geliştirmeler [Bölüm 2'de](https://youtu.be/rT27P1dPThk), v1.2'deki beyanname takibi ve bu özelliği adım adım nasıl geliştirdiğimiz [Bölüm 3'te](https://www.youtube.com/watch?v=SKAnJJIFzL8).
 
 ## Kurulum
 
